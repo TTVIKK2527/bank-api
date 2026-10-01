@@ -1,5 +1,7 @@
 # EST001 Branch Bank API
 
+Integration documentation (ÕV3): [INTEGRATIONS.md](INTEGRATIONS.md).
+
 A fully functional bank branch API built with a microservices architecture. Registered with the Central Bank as **EST001**, serving account numbers with the `EST` prefix.
 
 **Live API:** `http://89.167.117.189:3000/api/v1`  
