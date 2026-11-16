@@ -2,7 +2,7 @@
 
 ## Teostatud
 
-- Kriidi #335, #336 ja #337 täiskirjeldused loetud. Selles etapis rakendatud #336.
+- Kriidi #335, #336 ja #337 täiskirjeldused loetud. Rakendatud on kõik kolm protokolliadapterit.
 - Algse bank-api snapshot'i 55 faili taastatud GitHubi commit'ist
   `71978824c030111bd0dc09d9036cfcdba3999eb7`; kõigi failide Git blob SHA-1
   kontrollitud. `.claude/settings.local.json` jäeti teadlikult taastamata.
@@ -24,7 +24,7 @@ siin kontrollitud. Fikstuuritestid tõendavad protokolli teisendust, mitte algse
 panga äriloogika korrektsust. Adapter kasutab seda loogikat REST gateway kaudu.
 Vähemalt päris kohalik käivitus ja arenduspanga smoke-test tuleb enne esitamist teha.
 
-GraphQL #335 ja SOAP #337 implementatsioon on järgmised tööd. Kriidi
+GraphQL #335 ja SOAP #337 on samuti rakendatud; nende eraldi testid ja piirangud on vastavates README failides. Kriidi
 kriteeriume ei muudetud, midagi ei esitatud ja individuaalset kaitsmist ei tehtud.
 
 Kohalik Git on taastatud snapshot koos uue lisandiga, mitte GitHubi ajaloo kloon.
