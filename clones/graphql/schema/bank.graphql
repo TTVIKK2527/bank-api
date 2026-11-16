@@ -1,0 +1,26 @@
+"Money and ISO timestamps retain the REST API string representation."
+type Health { status: String, database: String, timestamp: String }
+type User { userId: String, fullName: String, email: String, createdAt: String, token: String }
+type Account { accountNumber: String, ownerId: String, currency: String, balance: String, createdAt: String }
+type AccountLookup { accountNumber: String, ownerName: String, currency: String }
+type Transfer {
+  transferId: String, status: String, sourceAccount: String, destinationAccount: String,
+  amount: String, convertedAmount: String, exchangeRate: String, rateCapturedAt: String,
+  timestamp: String, pendingSince: String, nextRetryAt: String, retryCount: Int, errorMessage: String
+}
+input UserInput { fullName: String!, email: String }
+input TransferInput { transferId: String!, sourceAccount: String!, destinationAccount: String!, amount: String! }
+type Query {
+  health: Health
+  "OpenAPI document serialized as JSON, since it is not a banking domain object."
+  apiDocs: String
+  user(userId: String!): User
+  account(accountNumber: String!): AccountLookup
+  transfer(transferId: String!): Transfer
+}
+type Mutation {
+  registerUser(input: UserInput!): User
+  createAccount(userId: String!, currency: String!): Account
+  initiateTransfer(input: TransferInput!): Transfer
+  receiveTransfer(jwt: String!): Transfer
+}

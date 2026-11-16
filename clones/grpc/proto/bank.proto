@@ -1,0 +1,53 @@
+syntax = "proto3";
+package bank.v1;
+
+// Public gateway API only. Internal service endpoints are not public RPCs.
+service Bank {
+  rpc Health(Empty) returns (HealthResponse);
+  rpc GetApiDocs(Empty) returns (ApiDocsResponse);
+  rpc RegisterUser(RegisterUserRequest) returns (User);
+  rpc GetUser(UserRequest) returns (User);
+  rpc CreateAccount(CreateAccountRequest) returns (Account);
+  rpc LookupAccount(AccountRequest) returns (AccountLookup);
+  rpc InitiateTransfer(TransferRequest) returns (Transfer);
+  rpc ReceiveTransfer(ReceiveRequest) returns (Transfer);
+  rpc GetTransfer(TransferLookup) returns (Transfer);
+}
+message Empty {}
+message HealthResponse { string status = 1; string database = 2; string timestamp = 3; }
+// OpenAPI is a versioned JSON document rather than a banking domain object.
+message ApiDocsResponse { string json = 1; }
+message RegisterUserRequest { string fullName = 1; optional string email = 2; }
+message UserRequest { string userId = 1; }
+message User {
+  string userId = 1; string fullName = 2; optional string email = 3;
+  string createdAt = 4; optional string token = 5;
+}
+message CreateAccountRequest { string userId = 1; string currency = 2; }
+message AccountRequest { string accountNumber = 1; }
+message Account {
+  string accountNumber = 1; string ownerId = 2; string currency = 3;
+  string balance = 4; string createdAt = 5;
+}
+message AccountLookup { string accountNumber = 1; string ownerName = 2; string currency = 3; }
+// Money is a decimal string, exactly as in REST. Never convert to float.
+message TransferRequest {
+  string transferId = 1; string sourceAccount = 2;
+  string destinationAccount = 3; string amount = 4;
+}
+message ReceiveRequest { string jwt = 1; }
+message TransferLookup { string transferId = 1; }
+message Transfer {
+  string transferId = 1; string status = 2;
+  optional string sourceAccount = 3; string destinationAccount = 4; string amount = 5;
+  optional string convertedAmount = 6; optional string exchangeRate = 7;
+  optional string rateCapturedAt = 8; string timestamp = 9;
+  optional string pendingSince = 10; optional string nextRetryAt = 11;
+  optional int32 retryCount = 12; optional string errorMessage = 13;
+}
+// Serialized in bank-error-bin trailing metadata on non-OK RPC status.
+message BankError {
+  int32 httpStatus = 1; string code = 2; string message = 3;
+  // Retains extra pending/timeout response fields without loss.
+  string responseJson = 4;
+}
