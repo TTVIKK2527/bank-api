@@ -1,0 +1,17 @@
+name: Protocol adapter tests
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  adapters:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - run: pip install -r clones/grpc/requirements.txt -r clones/graphql/requirements.txt -r clones/soap/requirements.txt
+      - run: ./clones/grpc/tests/test.sh
+      - run: ./clones/graphql/tests/test.sh
+      - run: ./clones/soap/tests/test.sh
+      - run: python -m unittest discover -s clones/tests -v

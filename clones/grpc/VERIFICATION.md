@@ -29,3 +29,17 @@ kriteeriume ei muudetud, midagi ei esitatud ja individuaalset kaitsmist ei tehtu
 
 Kohalik Git on taastatud snapshot koos uue lisandiga, mitte GitHubi ajaloo kloon.
 Enne PR-i tuleb lisand kanda päris upstream-ajalooga feature-harusse.
+
+
+## Jätkukontroll kohalikus piiranguteta ülesandes
+
+- Kloonitud päris upstream-ajalugu commit'ini 7197882 ja kantud ainult adapterite
+  lisandid feature/protocol-adapters harusse. Taastatud snapshot-rooti ei pushita.
+- gRPC: 23 testi PASS, sh kõik 10 varem socket-piirangu tõttu vahele jäetud võrgutesti.
+- GraphQL: 8 ühiktesti PASS; SOAP: 6 ühiktesti PASS.
+- Ühine HTTP integratsioon: 2 testi PASS, kummaski kõik 9 operatsiooni läbi
+  päris kohaliku HTTP-serveri ja sünteetilise REST-fikstuuri; SOAP vastused XSD-ga valideeritud.
+- CI workflow lisatud; selle päris tulemus on repositooriumi Actions vaates.
+- Need tulemused asendavad ülaltoodud socket-piirangu ja kohaliku Git-ajaloo takistuse.
+  Pärispanga PostgreSQL/Redis, keskserveri ja teiste pankadega test ning õppija
+  iseseisev kaitsmine jäävad kontrollimata; sünteetilist testmakset ei esitata päris ülekandena.

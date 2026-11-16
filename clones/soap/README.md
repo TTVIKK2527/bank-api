@@ -70,3 +70,14 @@ vigase XML-i/DTD/korduvate väljade tõrjumine ning rahastringi täpsus.
 WSDL-i pole siin kontrollitud välise WSDL-tööriistaga. Päris HTTP käivitus ja
 arenduspanga smoke-test on endiselt tegemata: sandbox keelab socket'id.
 Ühik- ja lepingutestid ei asenda neid ega individuaalset kaitsmist.
+
+
+## Jätkukontroll 16.11.2026 (varasemad socket-piirangud lahendatud)
+
+Lisand on kantud päris upstream Git-ajaloole, algne snapshot-root ei ole avaldamise alus.
+`python -m unittest discover -s clones/tests -v` kontrollis kõiki üheksat
+GraphQL ja SOAP operatsiooni tegelike kohalike HTTP ühendustega, sh Authorization
+päise edastus, XSD valideerimine ning WSDL-i HTTP päring. Mõlemad testid PASS.
+Ühiktestid: GraphQL 8 PASS, SOAP 6 PASS; gRPC 23 PASS koos päris võrgutranspordiga.
+Sünteetiline REST-fikstuur ei tõenda PostgreSQL/Redis-panga ega väliste pankade
+äriloogika tööd. Arenduspanga smoke-test ja individuaalne kaitsmine jäävad eraldi.
