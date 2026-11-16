@@ -14,8 +14,12 @@ CREATE TABLE IF NOT EXISTS users.api_keys (
   id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id     TEXT NOT NULL REFERENCES users.users(id),
   token_hash  TEXT NOT NULL UNIQUE,
+  expires_at  TIMESTAMPTZ,
   created_at  TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- Existing development databases may predate token expiry support.
+ALTER TABLE users.api_keys ADD COLUMN IF NOT EXISTS expires_at TIMESTAMPTZ;
 
 -- Accounts schema
 CREATE SCHEMA IF NOT EXISTS accounts;

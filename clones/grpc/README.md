@@ -120,3 +120,18 @@ Algse lähtekoodi snapshot on GitHubi commit'ist
 `71978824c030111bd0dc09d9036cfcdba3999eb7`. Kohalik algcommit tähistab snapshot'i
 taastamist, mitte algse Git-ajaloo koopiat. gRPC lisand on tehtud Codexi poolt;
 iseseisvat kaitsmist, Kriiti esitamist ega õpetaja kinnitust ei ole väidetud.
+
+
+### Päris kohaliku upstream-panga smoke-test
+
+`npm ci --ignore-scripts && npm run build` ning
+`python clones/tests/smoke_upstream.py` (repositooriumi juurkaustast) läbisid.
+Vaja on PostgreSQL tööriistu `initdb`, `pg_ctl` ja `psql` PATH-is ning adapterite
+Python sõltuvusi; gRPC genereeritud moodulid loob eelnev gRPC testikäsk.
+Test loob ja eemaldab ajutise PostgreSQL klastri ning käivitab tegelikud user-,
+account- ja gateway-teenused ainult loopback-liidestel. Kõigi kolme adapteri kaudu
+kontrolliti andmebaasi tervist, registreerimist, autentitud kasutaja lugemist,
+nullsaldoga konto loomist ja avalikku kontopäringut. gRPC kaudu loeti ka OpenAPI.
+Tokeneid ei kuvata. Parandati algskeemi puuduv API-võtme aegumisveerg ja ühiste
+tüüpide puuduv TypeScript konfiguratsioon; olemasoleva skeemi uuendamist kontrollitakse.
+Rahaülekanded, Redis retry, keskserver ja välised pangad ei kuulu sellesse kontrolli.

@@ -73,3 +73,18 @@ päise edastus, XSD valideerimine ning WSDL-i HTTP päring. Mõlemad testid PASS
 Ühiktestid: GraphQL 8 PASS, SOAP 6 PASS; gRPC 23 PASS koos päris võrgutranspordiga.
 Sünteetiline REST-fikstuur ei tõenda PostgreSQL/Redis-panga ega väliste pankade
 äriloogika tööd. Arenduspanga smoke-test ja individuaalne kaitsmine jäävad eraldi.
+
+
+### Päris kohaliku upstream-panga smoke-test
+
+`npm ci --ignore-scripts && npm run build` ning
+`python clones/tests/smoke_upstream.py` (repositooriumi juurkaustast) läbisid.
+Vaja on PostgreSQL tööriistu `initdb`, `pg_ctl` ja `psql` PATH-is ning adapterite
+Python sõltuvusi; gRPC genereeritud moodulid loob eelnev gRPC testikäsk.
+Test loob ja eemaldab ajutise PostgreSQL klastri ning käivitab tegelikud user-,
+account- ja gateway-teenused ainult loopback-liidestel. Kõigi kolme adapteri kaudu
+kontrolliti andmebaasi tervist, registreerimist, autentitud kasutaja lugemist,
+nullsaldoga konto loomist ja avalikku kontopäringut. gRPC kaudu loeti ka OpenAPI.
+Tokeneid ei kuvata. Parandati algskeemi puuduv API-võtme aegumisveerg ja ühiste
+tüüpide puuduv TypeScript konfiguratsioon; olemasoleva skeemi uuendamist kontrollitakse.
+Rahaülekanded, Redis retry, keskserver ja välised pangad ei kuulu sellesse kontrolli.

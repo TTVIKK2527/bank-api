@@ -84,3 +84,18 @@ Sünteetiline REST-fikstuur ei tõenda PostgreSQL/Redis-panga ega väliste panka
 
 WSDL-i sõltumatu kontroll: Zeep 4.3.3 laadis lepingu ning koostas kõigi üheksa
 operatsiooni sisendsõnumid edukalt. See kontroll ei saatnud päringuid pärispangale.
+
+
+### Päris kohaliku upstream-panga smoke-test
+
+`npm ci --ignore-scripts && npm run build` ning
+`python clones/tests/smoke_upstream.py` (repositooriumi juurkaustast) läbisid.
+Vaja on PostgreSQL tööriistu `initdb`, `pg_ctl` ja `psql` PATH-is ning adapterite
+Python sõltuvusi; gRPC genereeritud moodulid loob eelnev gRPC testikäsk.
+Test loob ja eemaldab ajutise PostgreSQL klastri ning käivitab tegelikud user-,
+account- ja gateway-teenused ainult loopback-liidestel. Kõigi kolme adapteri kaudu
+kontrolliti andmebaasi tervist, registreerimist, autentitud kasutaja lugemist,
+nullsaldoga konto loomist ja avalikku kontopäringut. gRPC kaudu loeti ka OpenAPI.
+Tokeneid ei kuvata. Parandati algskeemi puuduv API-võtme aegumisveerg ja ühiste
+tüüpide puuduv TypeScript konfiguratsioon; olemasoleva skeemi uuendamist kontrollitakse.
+Rahaülekanded, Redis retry, keskserver ja välised pangad ei kuulu sellesse kontrolli.
