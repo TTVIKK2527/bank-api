@@ -1,0 +1,403 @@
+<?xml version='1.0' encoding='utf-8'?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:est001:bank:v1" targetNamespace="urn:est001:bank:v1" name="Bank">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:est001:bank:v1" elementFormDefault="qualified">
+      <xsd:element name="Health">
+        <xsd:complexType>
+          <xsd:sequence/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="HealthResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="database" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="timestamp" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetApiDocs">
+        <xsd:complexType>
+          <xsd:sequence/>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetApiDocsResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="json" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RegisterUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="fullName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="email" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="RegisterUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="fullName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="email" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="createdAt" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="token" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUser">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetUserResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="fullName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="email" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="createdAt" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateAccount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="userId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="currency" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="CreateAccountResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="accountNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ownerId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="currency" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="balance" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="createdAt" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="LookupAccount">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="accountNumber" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="LookupAccountResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="accountNumber" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="ownerName" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="currency" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="InitiateTransfer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transferId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="sourceAccount" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="destinationAccount" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <xsd:element name="amount" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="InitiateTransferResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transferId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="sourceAccount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="destinationAccount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="amount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="convertedAmount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="exchangeRate" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="rateCapturedAt" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="timestamp" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ReceiveTransfer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="jwt" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="ReceiveTransferResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transferId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="destinationAccount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="amount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="timestamp" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTransfer">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transferId" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="GetTransferResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="transferId" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="status" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="sourceAccount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="destinationAccount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="amount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="convertedAmount" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="exchangeRate" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="rateCapturedAt" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="timestamp" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="pendingSince" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="nextRetryAt" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="retryCount" type="xsd:int" minOccurs="0" maxOccurs="1"/>
+            <xsd:element name="errorMessage" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="BankError">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="httpStatus" type="xsd:int"/>
+            <xsd:element name="code" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+            <xsd:element name="responseJson" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="HealthRequest">
+    <wsdl:part name="parameters" element="tns:Health"/>
+  </wsdl:message>
+  <wsdl:message name="HealthResponse">
+    <wsdl:part name="parameters" element="tns:HealthResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetApiDocsRequest">
+    <wsdl:part name="parameters" element="tns:GetApiDocs"/>
+  </wsdl:message>
+  <wsdl:message name="GetApiDocsResponse">
+    <wsdl:part name="parameters" element="tns:GetApiDocsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterUserRequest">
+    <wsdl:part name="parameters" element="tns:RegisterUser"/>
+  </wsdl:message>
+  <wsdl:message name="RegisterUserResponse">
+    <wsdl:part name="parameters" element="tns:RegisterUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserRequest">
+    <wsdl:part name="parameters" element="tns:GetUser"/>
+  </wsdl:message>
+  <wsdl:message name="GetUserResponse">
+    <wsdl:part name="parameters" element="tns:GetUserResponse"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAccountRequest">
+    <wsdl:part name="parameters" element="tns:CreateAccount"/>
+  </wsdl:message>
+  <wsdl:message name="CreateAccountResponse">
+    <wsdl:part name="parameters" element="tns:CreateAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="LookupAccountRequest">
+    <wsdl:part name="parameters" element="tns:LookupAccount"/>
+  </wsdl:message>
+  <wsdl:message name="LookupAccountResponse">
+    <wsdl:part name="parameters" element="tns:LookupAccountResponse"/>
+  </wsdl:message>
+  <wsdl:message name="InitiateTransferRequest">
+    <wsdl:part name="parameters" element="tns:InitiateTransfer"/>
+  </wsdl:message>
+  <wsdl:message name="InitiateTransferResponse">
+    <wsdl:part name="parameters" element="tns:InitiateTransferResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ReceiveTransferRequest">
+    <wsdl:part name="parameters" element="tns:ReceiveTransfer"/>
+  </wsdl:message>
+  <wsdl:message name="ReceiveTransferResponse">
+    <wsdl:part name="parameters" element="tns:ReceiveTransferResponse"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransferRequest">
+    <wsdl:part name="parameters" element="tns:GetTransfer"/>
+  </wsdl:message>
+  <wsdl:message name="GetTransferResponse">
+    <wsdl:part name="parameters" element="tns:GetTransferResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BankFault">
+    <wsdl:part name="fault" element="tns:BankError"/>
+  </wsdl:message>
+  <wsdl:portType name="BankPortType">
+    <wsdl:operation name="Health">
+      <wsdl:input message="tns:HealthRequest"/>
+      <wsdl:output message="tns:HealthResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetApiDocs">
+      <wsdl:input message="tns:GetApiDocsRequest"/>
+      <wsdl:output message="tns:GetApiDocsResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <wsdl:input message="tns:RegisterUserRequest"/>
+      <wsdl:output message="tns:RegisterUserResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <wsdl:input message="tns:GetUserRequest"/>
+      <wsdl:output message="tns:GetUserResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="CreateAccount">
+      <wsdl:input message="tns:CreateAccountRequest"/>
+      <wsdl:output message="tns:CreateAccountResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="LookupAccount">
+      <wsdl:input message="tns:LookupAccountRequest"/>
+      <wsdl:output message="tns:LookupAccountResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="InitiateTransfer">
+      <wsdl:input message="tns:InitiateTransferRequest"/>
+      <wsdl:output message="tns:InitiateTransferResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveTransfer">
+      <wsdl:input message="tns:ReceiveTransferRequest"/>
+      <wsdl:output message="tns:ReceiveTransferResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransfer">
+      <wsdl:input message="tns:GetTransferRequest"/>
+      <wsdl:output message="tns:GetTransferResponse"/>
+      <wsdl:fault name="BankFault" message="tns:BankFault"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BankSoapBinding" type="tns:BankPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Health">
+      <soap:operation soapAction="urn:est001:bank:v1/Health"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetApiDocs">
+      <soap:operation soapAction="urn:est001:bank:v1/GetApiDocs"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RegisterUser">
+      <soap:operation soapAction="urn:est001:bank:v1/RegisterUser"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetUser">
+      <soap:operation soapAction="urn:est001:bank:v1/GetUser"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="CreateAccount">
+      <soap:operation soapAction="urn:est001:bank:v1/CreateAccount"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="LookupAccount">
+      <soap:operation soapAction="urn:est001:bank:v1/LookupAccount"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InitiateTransfer">
+      <soap:operation soapAction="urn:est001:bank:v1/InitiateTransfer"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="ReceiveTransfer">
+      <soap:operation soapAction="urn:est001:bank:v1/ReceiveTransfer"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetTransfer">
+      <soap:operation soapAction="urn:est001:bank:v1/GetTransfer"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BankFault">
+        <soap:fault name="BankFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BankService">
+    <wsdl:port name="BankSoapPort" binding="tns:BankSoapBinding">
+      <soap:address location="http://127.0.0.1:50053/soap"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
