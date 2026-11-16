@@ -81,3 +81,6 @@ päise edastus, XSD valideerimine ning WSDL-i HTTP päring. Mõlemad testid PASS
 Ühiktestid: GraphQL 8 PASS, SOAP 6 PASS; gRPC 23 PASS koos päris võrgutranspordiga.
 Sünteetiline REST-fikstuur ei tõenda PostgreSQL/Redis-panga ega väliste pankade
 äriloogika tööd. Arenduspanga smoke-test ja individuaalne kaitsmine jäävad eraldi.
+
+WSDL-i sõltumatu kontroll: Zeep 4.3.3 laadis lepingu ning koostas kõigi üheksa
+operatsiooni sisendsõnumid edukalt. See kontroll ei saatnud päringuid pärispangale.
